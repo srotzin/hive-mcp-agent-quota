@@ -1,0 +1,45 @@
+{
+  "name": "hive-mcp-agent-quota",
+  "version": "1.0.0",
+  "description": "Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization.",
+  "type": "module",
+  "main": "server.js",
+  "bin": {
+    "hive-mcp-agent-quota": "./server.js"
+  },
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "smoke": "node smoke.js"
+  },
+  "keywords": [
+    "mcp",
+    "hive",
+    "quota",
+    "metering",
+    "x402",
+    "402",
+    "a2a",
+    "agent-to-agent",
+    "did",
+    "ai-agents",
+    "usdc",
+    "base-l2",
+    "rate-limit"
+  ],
+  "author": "Steve Rotzin <steve@thehiveryiq.com> (https://www.thehiveryiq.com)",
+  "license": "MIT",
+  "homepage": "https://github.com/srotzin/hive-mcp-agent-quota",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/srotzin/hive-mcp-agent-quota"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "ethers": "^6.13.2",
+    "express": "^4.19.2"
+  }
+}

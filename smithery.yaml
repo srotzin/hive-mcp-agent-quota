@@ -1,0 +1,133 @@
+# Smithery Registry — hive-mcp-agent-quota
+# https://smithery.ai
+
+startCommand:
+  type: http
+  configSchema:
+    type: object
+    properties: {}
+    required: []
+  url: https://hive-mcp-agent-quota.onrender.com/mcp
+
+name: hive-mcp-agent-quota
+displayName: hive-mcp-agent-quota — Per-agent quota meter
+version: "1.0.0"
+description: >
+  Per-agent quota metering for the A2A network. Charges $0.001 per check via
+  x402 on Base L2, tracks consumption per agent DID, returns remaining quota,
+  and inherits the hivemorph barter floor pricing pattern (advertised
+  accept_min_usd alongside amount_usd). Inbound only. ENABLE=true default.
+
+author:
+  name: Steve Rotzin
+  email: steve@thehiveryiq.com
+  url: https://www.thehiveryiq.com
+
+license: MIT
+homepage: https://github.com/srotzin/hive-mcp-agent-quota
+repository:
+  type: git
+  url: https://github.com/srotzin/hive-mcp-agent-quota
+
+transport: streamable-http
+endpoint: https://hive-mcp-agent-quota.onrender.com/mcp
+protocol: "2024-11-05"
+
+categories:
+  - agent-to-agent
+  - rate-limiting
+  - metering
+  - finance
+  - micropayments
+
+tags:
+  - mcp
+  - hive
+  - quota
+  - metering
+  - x402
+  - 402
+  - did
+  - a2a
+  - ai-agents
+  - usdc
+  - base-l2
+  - rate-limit
+
+tools:
+  - name: quota_check
+    description: >
+      Consume one or more quota units for an agent DID. $0.001 USDC per unit
+      via x402. Inbound only. First call returns a 402 envelope; resubmit with
+      X-Payment header to mint an access token and complete the check.
+    inputs:
+      - name: did
+        type: string
+        required: true
+        description: "Agent DID (did:method:identifier)."
+      - name: unit_count
+        type: integer
+        required: false
+        description: "Quota units to consume. Default 1."
+  - name: quota_balance
+    description: >
+      Read remaining quota for an agent DID. Free, read-only.
+    inputs:
+      - name: did
+        type: string
+        required: true
+        description: "Agent DID."
+  - name: quota_topup_estimate
+    description: >
+      Estimate USDC cost to top up a DID with N units. Free. Inherits the
+      hivemorph barter floor — returns asking_usd and accept_min_usd.
+    inputs:
+      - name: units
+        type: integer
+        required: true
+        description: "Units to top up."
+
+runtime:
+  type: node
+  version: ">=18"
+  command: node server.js
+  env:
+    - name: PORT
+      default: "3000"
+      required: false
+    - name: ENABLE
+      default: "true"
+      required: false
+    - name: WALLET_ADDRESS
+      default: "0x15184bf50b3d3f52b60434f8942b7d52f2eb436e"
+      required: false
+    - name: QUOTA_CHECK_PRICE_USDC
+      default: "0.001"
+      required: false
+    - name: HIVE_X402_FLOOR_PCT_DEFAULT
+      default: "0.70"
+      required: false
+    - name: HIVE_X402_FLOOR_MIN_PCT
+      default: "0.30"
+      required: false
+    - name: HIVE_X402_FLOOR_MAX_PCT
+      default: "0.95"
+      required: false
+    - name: BASE_RPC_URL
+      default: "https://mainnet.base.org"
+      required: false
+    - name: DEFAULT_QUOTA_UNITS
+      default: "0"
+      required: false
+    - name: QUOTA_DB_PATH
+      default: "/tmp/quota.db"
+      required: false
+
+brand:
+  color: "#C08D23"
+  name: "Hive Civilization gold (Pantone 1245 C)"
+
+policy:
+  inbound_only: true
+  custody: never
+  role: metering_only
