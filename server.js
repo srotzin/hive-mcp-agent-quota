@@ -622,6 +622,11 @@ if (!ENABLE) {
 }
 
 
+// ─── Schema constants (auto-injected to fix deploy) ─────
+const SERVICE = 'hive-mcp-agent-quota';
+const VERSION = '1.0.0';
+
+
 // ─── Schema discoverability ────────────────────────────────────────────────
 const AGENT_CARD = {
   name: SERVICE,
