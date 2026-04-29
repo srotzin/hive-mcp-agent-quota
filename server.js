@@ -625,7 +625,7 @@ if (!ENABLE) {
 // ─── Schema discoverability ────────────────────────────────────────────────
 const AGENT_CARD = {
   name: SERVICE,
-  description: `Per-agent quota metering for the A2A network. $0.001 per check via x402 on Base L2.. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.`,
+  description: 'Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization.. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.',
   url: `https://${SERVICE}.onrender.com`,
   provider: {
     organization: 'Hive Civilization',
@@ -650,7 +650,11 @@ const AGENT_CARD = {
   },
   defaultInputModes: ['application/json'],
   defaultOutputModes: ['application/json'],
-  skills: TOOLS.map(t => ({ name: t.name, description: t.description })),
+  skills: [
+    { name: 'quota_check', description: 'Consume one or more quota units for an agent DID. Costs $0.001 USDC per unit on Base L2 via x402. Inbound only. First call returns a 402 envelope; submit proof inline via X-Payment header to mint an access token, then retry.' },
+    { name: 'quota_balance', description: 'Read remaining quota for an agent DID. Free. Returns units_purchased, units_consumed, units_remaining, first_seen, last_seen.' },
+    { name: 'quota_topup_estimate', description: 'Estimate the USDC cost to top up a DID with N units. Free. Inherits the hivemorph barter floor: returns asking_usd and accept_min_usd. Use the returned values to construct an x402 proof.' },
+  ],
   extensions: {
     hive_pricing: {
       currency: 'USDC',
@@ -668,7 +672,7 @@ const AP2 = {
   agent: {
     name: SERVICE,
     did: `did:web:${SERVICE}.onrender.com`,
-    description: `Per-agent quota metering for the A2A network. $0.001 per check via x402 on Base L2.. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.`,
+    description: 'Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization.. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.',
   },
   endpoints: {
     mcp: `https://${SERVICE}.onrender.com/mcp`,
@@ -688,7 +692,7 @@ const AP2 = {
 };
 
 app.get('/.well-known/agent-card.json', (req, res) => res.json(AGENT_CARD));
-app.get('/.well-known/ap2.json', (req, res) => res.json(AP2));
+app.get('/.well-known/ap2.json',         (req, res) => res.json(AP2));
 
 
 app.listen(PORT, () => {
