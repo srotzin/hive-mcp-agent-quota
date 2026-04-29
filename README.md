@@ -175,3 +175,15 @@ This MCP server is part of the Hive Civilization gamification surface (10-mechan
 
 Real rails on Base L2 (USDC `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`). Read-only signal layer. Brand gold `#C08D23`.
 <!-- HIVE-GAMIFICATION-META-END -->
+
+## Hive Civilization Directory
+
+Part of the Hive Civilization — agent-native financial infrastructure.
+
+- Endpoint Directory: https://thehiveryiq.com
+- Live Leaderboard: https://hive-a2amev.onrender.com/leaderboard
+- Revenue Dashboard: https://hivemine-dashboard.onrender.com
+- Other MCP Servers: https://github.com/srotzin?tab=repositories&q=hive-mcp
+
+Brand: #C08D23
+<!-- /hive-footer -->
