@@ -625,7 +625,7 @@ if (!ENABLE) {
 // ─── Schema discoverability ────────────────────────────────────────────────
 const AGENT_CARD = {
   name: SERVICE,
-  description: 'Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization.. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.',
+  description: 'Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.',
   url: `https://${SERVICE}.onrender.com`,
   provider: {
     organization: 'Hive Civilization',
@@ -672,7 +672,7 @@ const AP2 = {
   agent: {
     name: SERVICE,
     did: `did:web:${SERVICE}.onrender.com`,
-    description: 'Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization.. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.',
+    description: 'Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization. New agents: first call free. Loyalty: every 6th paid call is free. Pay in USDC on Base L2.',
   },
   endpoints: {
     mcp: `https://${SERVICE}.onrender.com/mcp`,
