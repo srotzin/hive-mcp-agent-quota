@@ -621,6 +621,171 @@ if (!ENABLE) {
   console.log('[hive-mcp-agent-quota] ENABLE=false — running in dormant mode (health only)');
 }
 
+
+// ─── Schema discoverability routes ────────────────────────────────────────
+app.get('/.well-known/agent-card.json', (req, res) => {
+  res.json({
+  "name": "hive-mcp-agent-quota",
+  "description": "Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization.",
+  "url": "https://hive-mcp-agent-quota.onrender.com",
+  "provider": {
+    "organization": "Hive Civilization",
+    "url": "https://www.thehiveryiq.com",
+    "contact": "steve@thehiveryiq.com"
+  },
+  "version": "1.0.0",
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "authentication": {
+    "schemes": [
+      "x402"
+    ],
+    "credentials": {
+      "type": "x402",
+      "asset": "USDC",
+      "network": "base",
+      "asset_address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "recipient": "0x15184bf50b3d3f52b60434f8942b7d52f2eb436e"
+    }
+  },
+  "defaultInputModes": [
+    "application/json"
+  ],
+  "defaultOutputModes": [
+    "application/json"
+  ],
+  "skills": []
+});
+});
+
+app.get('/.well-known/ap2.json', (req, res) => {
+  res.json({
+  "ap2_version": "1",
+  "agent": {
+    "name": "hive-mcp-agent-quota",
+    "did": "did:web:hive-mcp-agent-quota.onrender.com",
+    "description": "Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization."
+  },
+  "endpoints": {
+    "mcp": "https://hive-mcp-agent-quota.onrender.com/mcp",
+    "agent_card": "https://hive-mcp-agent-quota.onrender.com/.well-known/agent-card.json"
+  },
+  "payments": {
+    "schemes": [
+      "x402"
+    ],
+    "primary": {
+      "scheme": "x402",
+      "network": "base",
+      "asset": "USDC",
+      "asset_address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "recipient": "0x15184bf50b3d3f52b60434f8942b7d52f2eb436e"
+    }
+  },
+  "brand": {
+    "color": "#C08D23",
+    "name": "Hive Civilization"
+  }
+});
+});
+
+app.get('/openapi.json', (req, res) => {
+  res.json({
+  "openapi": "3.0.3",
+  "info": {
+    "title": "hive-mcp-agent-quota",
+    "version": "1.0.0",
+    "description": "Per-agent quota metering for the A2A network. Charges $0.001/check via x402, tracks consumption per agent DID, returns remaining quota. Inbound only. Hive Civilization.",
+    "contact": {
+      "email": "steve@thehiveryiq.com"
+    },
+    "x-brand-color": "#C08D23",
+    "x-organization": "Hive Civilization"
+  },
+  "servers": [
+    {
+      "url": "https://hive-mcp-agent-quota.onrender.com"
+    }
+  ],
+  "paths": {
+    "/health": {
+      "get": {
+        "summary": "GET /health",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/": {
+      "get": {
+        "summary": "GET /",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/mcp": {
+      "post": {
+        "summary": "POST /mcp",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/quota/check": {
+      "post": {
+        "summary": "POST /v1/quota/check",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/quota/balance": {
+      "get": {
+        "summary": "GET /v1/quota/balance",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/quota/estimate": {
+      "get": {
+        "summary": "GET /v1/quota/estimate",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/v1/quota/today": {
+      "get": {
+        "summary": "GET /v1/quota/today",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+});
+});
+
+
 app.listen(PORT, () => {
   console.log(`[hive-mcp-agent-quota] listening on :${PORT} — inbound only — price=$${PRICE_USDC}/unit floor=${clampFloorPct(FLOOR_PCT_DEFAULT)}`);
 });
