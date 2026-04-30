@@ -1,5 +1,7 @@
 # hive-mcp-agent-quota
 
+[![srotzin/hive-mcp-agent-quota MCP server](https://glama.ai/mcp/servers/srotzin/hive-mcp-agent-quota/badges/score.svg)](https://glama.ai/mcp/servers/srotzin/hive-mcp-agent-quota)
+
 Per-agent quota meter for the A2A network. Each call to `quota_check`
 consumes one or more units against an agent's DID and is settled at
 $0.001 USDC per unit on Base L2 via the x402 envelope. Inbound only.
